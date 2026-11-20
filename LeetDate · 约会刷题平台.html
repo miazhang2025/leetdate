@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeetDate · 约会刷题平台</title>
+<meta name="description" content="LeetDate：湾区第一家约会刷题平台。This site is satire.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@400;500;700;900&amp;family=Instrument+Serif:ital@1&amp;display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#FFF5F7}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+dialog::backdrop{background:rgba(59,10,36,0.45)}
+section[id]{scroll-margin-top:84px}
+label:has(input:checked){border-color:#D61F69 !important;background:#FFF0F4}
+button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #D61F69;outline-offset:2px}
+@media (max-width:640px){#pToast{right:8px !important}}
+a{color:#D61F69}a:hover{color:#A3124E}
+.lang-zh .en{display:none !important}
+.lang-en .zh{display:none !important}
+summary{cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+details[open] .faq-plus{transform:rotate(45deg)}
+</style>
+
+</head>
+<body>
+
+<div id="app" class="lang-zh" style="min-height: 100vh; background: #FFF5F7; color: #3B0A24; font-family: 'Plus Jakarta Sans', 'Noto Sans SC', system-ui, sans-serif; font-size: 16px; line-height: 1.55">
+
+<!-- NAV -->
+<header style="position: sticky; top: 0; z-index: 10; background: rgba(255,245,247,0.94); border-bottom: 1px solid #F6D3DE">
+<div style="max-width: 1200px; margin: 0 auto; padding: 14px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #3B0A24">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #D61F69; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.7z"></path></svg>
+</span>
+<span style="font-weight: 800; font-size: 20px; letter-spacing: -0.02em">LeetDate</span>
+</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 15px; font-weight: 500">
+<a href="#how" style="color: #5E2A43; text-decoration: none"><span class="zh">原理</span><span class="en">How it works</span></a>
+<a href="#curriculum" style="color: #5E2A43; text-decoration: none"><span class="zh">题库</span><span class="en">Curriculum</span></a>
+<a href="#pricing" style="color: #5E2A43; text-decoration: none"><span class="zh">价格</span><span class="en">Pricing</span></a>
+<a href="#coaches" style="color: #5E2A43; text-decoration: none"><span class="zh">教练</span><span class="en">Coaches</span></a>
+<a href="#parents" style="color: #5E2A43; text-decoration: none"><span class="zh">家长端</span><span class="en">For Parents</span></a>
+<a href="#faq" style="color: #5E2A43; text-decoration: none">FAQ</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 10px">
+<button type="button" id="langToggle" aria-label="Switch language / 切换语言" style="min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid #E7A9BE; background: #FFFFFF; color: #3B0A24; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D61F69" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"></path></svg>
+<span class="zh">中文 / <span style="color: #9A6A80">EN</span></span><span class="en"><span style="color: #9A6A80">中文</span> / EN</span>
+</button>
+<a href="#pricing" style="min-height: 44px; padding: 0 20px; border-radius: 999px; background: #D61F69; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 14px; display: flex; align-items: center"><span class="zh">预约 Mock Date</span><span class="en">Book a Mock Date</span></a>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 88px 24px 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+<div style="flex: 999 1 520px; min-width: 0">
+<div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: #FFE3EA; color: #A3124E; font-size: 13px; font-weight: 700">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #D61F69"></span>
+<span class="zh">YC W27 孵化 · 现已覆盖 SF、Palo Alto、Cupertino</span><span class="en">Backed by YC W27 · Now live in SF, Palo Alto &amp; Cupertino</span>
+</div>
+<h1 style="margin: 24px 0 0; font-size: clamp(44px, 7vw, 68px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800">
+<span class="zh">第一次约会，<br>别裸考。</span><span class="en">Don't wing your<br>first date.</span>
+<br><span style="font-family: 'Instrument Serif', 'Noto Sans SC', serif; font-style: italic; font-weight: 400; color: #D61F69; letter-spacing: -0.01em"><span class="zh">刷题，上岸。</span><span class="en">Grind it.</span></span>
+</h1>
+<p style="margin: 24px 0 0; font-size: 20px; color: #6E3A55; max-width: 540px">
+<span class="zh">你的下一段感情就是一场 system design 面试。像准备 onsite 一样准备它。</span><span class="en">Your next relationship is a system design interview. Prepare accordingly.</span>
+</p>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#quiz" data-open-quiz style="min-height: 52px; padding: 0 28px; border-radius: 999px; background: #D61F69; color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 16px; display: flex; align-items: center"><span class="zh">免费测评</span><span class="en">Start Free Diagnostic</span></a>
+<a href="#pricing" style="min-height: 52px; padding: 0 28px; border-radius: 999px; background: #FFFFFF; color: #3B0A24; border: 1.5px solid #E7A9BE; text-decoration: none; font-weight: 700; font-size: 16px; display: flex; align-items: center"><span class="zh">预约 Mock Date</span><span class="en">Book a Mock Date</span></a>
+</div>
+<p style="margin: 28px 0 0; font-size: 14px; color: #7A4A60; max-width: 520px">
+<span class="zh">已有 12,000+ 名工程师在这里训练：他们读完了所有恋爱书，但一次对话都没聊完。</span><span class="en">Trusted by 12,000+ engineers who have read every relationship book but never finished one conversation.</span>
+</p>
+</div>
+
+<!-- profile card -->
+<div style="flex: 1 1 360px; min-width: 0; display: flex; justify-content: center">
+<div style="position: relative; width: 100%; max-width: 380px">
+<div style="background: #FFFFFF; border-radius: 28px; padding: 24px; box-shadow: 0 24px 60px rgba(163,18,78,0.14); border: 1px solid #F6D3DE">
+<div style="height: 200px; border-radius: 20px; background: #FFD1DE; display: flex; align-items: center; justify-content: center; position: relative">
+<span style="width: 112px; height: 112px; border-radius: 50%; background: #D61F69; color: #FFFFFF; font-size: 48px; font-weight: 800; display: flex; align-items: center; justify-content: center" id="pInitial">J</span>
+<span style="position: absolute; top: 14px; left: 14px; padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: #A3124E; font-size: 12px; font-weight: 700"><span class="zh">认证 Mock Dater</span><span class="en">Verified Mock Dater</span></span>
+</div>
+<div style="margin-top: 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px">
+<div style="font-size: 22px; font-weight: 800" id="pName">Jason, 31</div>
+<div style="font-size: 13px; color: #7A4A60; font-weight: 600" id="pTitle">ex-Meta · L6</div>
+</div>
+<div style="margin-top: 14px; font-size: 13px; color: #7A4A60; font-weight: 600"><span class="zh">你的恋爱准备度（RRS）</span><span class="en">Your Romantic Readiness Score</span></div>
+<div style="margin-top: 6px; display: flex; align-items: center; gap: 12px">
+<div style="flex: 1; height: 10px; border-radius: 999px; background: #FFE3EA"><div style="width: 61%; height: 10px; border-radius: 999px; background: #D61F69"></div></div>
+<div style="font-weight: 800; font-size: 15px">487<span style="color: #9A6A80; font-weight: 600">/800</span></div>
+</div>
+<div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px" id="pTags">
+<span style="padding: 6px 12px; border-radius: 999px; background: #FFF0F4; color: #5E2A43; font-size: 13px; font-weight: 600"><span class="zh">徒步</span><span class="en">Hiking</span></span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #FFF0F4; color: #5E2A43; font-size: 13px; font-weight: 600">System design</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #FFF0F4; color: #5E2A43; font-size: 13px; font-weight: 600"><span class="zh">珍珠奶茶</span><span class="en">Boba</span></span>
+</div>
+<div style="margin-top: 22px; display: flex; justify-content: center; gap: 20px">
+<button type="button" id="pPass" aria-label="Pass" style="width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid #E7A9BE; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7A4A60" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+</button>
+<button type="button" id="pLike" aria-label="Book this mock date" style="width: 56px; height: 56px; border-radius: 50%; border: none; background: #D61F69; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.7z"></path></svg>
+</button>
+</div>
+</div>
+<div id="pToast" style="position: absolute; right: -14px; bottom: 78px; transition: opacity .25s, transform .25s; background: #3B0A24; color: #FFFFFF; padding: 12px 16px; border-radius: 16px; font-size: 13px; font-weight: 600; box-shadow: 0 12px 30px rgba(59,10,36,0.25); max-width: 200px">
+<div style="color: #FF9EC0; font-weight: 800" id="pToastTitle"><span class="zh">配对成功！</span><span class="en">It's a match!</span></div>
+<div id="pToastBody"><span class="zh">面评将在 24 小时内送达</span><span class="en">Feedback arrives within 24h</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- LOGO STRIP -->
+<section style="border-top: 1px solid #F6D3DE; border-bottom: 1px solid #F6D3DE; background: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 40px">
+<span style="font-size: 14px; color: #7A4A60; font-weight: 600"><span class="zh">我们的学员约会过的对象来自</span><span class="en">Our alumni have dated people at</span></span>
+<span style="font-size: 22px; font-weight: 800; color: #9A6A80; letter-spacing: -0.02em">Google</span>
+<span style="font-size: 22px; font-weight: 800; color: #9A6A80; letter-spacing: -0.02em">Meta</span>
+<span style="font-size: 22px; font-weight: 800; color: #9A6A80; letter-spacing: -0.02em">OpenAI</span>
+<span style="font-size: 22px; font-weight: 800; color: #9A6A80; letter-spacing: -0.02em"><span class="zh">Hayes Valley 某 B 轮公司</span><span class="en">a Series B in Hayes Valley</span></span>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="max-width: 1200px; margin: 0 auto; padding: 104px 24px 40px">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">HOW IT WORKS</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800; max-width: 760px"><span class="zh">四步，从单身到 second date</span><span class="en">Four steps from single to second date</span></h2>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px">
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE">
+<div style="font-size: 14px; font-weight: 800; color: #D61F69">01</div>
+<h3 style="margin: 14px 0 0; font-size: 21px; font-weight: 800; letter-spacing: -0.01em"><span class="zh">恋爱准备度测评</span><span class="en">Romantic Readiness Assessment</span></h3>
+<p style="margin: 10px 0 0; color: #6E3A55; font-size: 15px"><span class="zh">45 分钟测评，给你一个 RRS 分数（0–800，不要问为什么是 800）。</span><span class="en">A 45-minute diagnostic. You get an RRS score from 0 to 800. Don't ask why 800.</span></p>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE">
+<div style="font-size: 14px; font-weight: 800; color: #D61F69">02</div>
+<h3 style="margin: 14px 0 0; font-size: 21px; font-weight: 800; letter-spacing: -0.01em">Mock Date</h3>
+<p style="margin: 10px 0 0; color: #6E3A55; font-size: 15px"><span class="zh">和持证约会教练进行 90 分钟模拟约会，全程录像。</span><span class="en">A 90-minute simulated date with a certified dating coach. Fully recorded.</span></p>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE">
+<div style="font-size: 14px; font-weight: 800; color: #D61F69">03</div>
+<h3 style="margin: 14px 0 0; font-size: 21px; font-weight: 800; letter-spacing: -0.01em"><span class="zh">结构化反馈</span><span class="en">Structured Feedback</span></h3>
+<p style="margin: 10px 0 0; color: #6E3A55; font-size: 15px"><span class="zh">按 rubric 打分，24 小时内出报告，附 date / no date 建议。</span><span class="en">Scored against our rubric. Report in 24 hours, with a date / no-date call.</span></p>
+</div>
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE">
+<div style="font-size: 14px; font-weight: 800; color: #D61F69">04</div>
+<h3 style="margin: 14px 0 0; font-size: 21px; font-weight: 800; letter-spacing: -0.01em"><span class="zh">持续迭代</span><span class="en">Iterate</span></h3>
+<p style="margin: 10px 0 0; color: #6E3A55; font-size: 15px"><span class="zh">继续刷题，直到拿到 second date。</span><span class="en">Keep grinding until you land a second date.</span></p>
+</div>
+</div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">CURRICULUM</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">200+ 道真题，按难度分级</span><span class="en">200+ real problems, sorted by difficulty</span></h2>
+<div style="margin-top: 40px; background: #FFFFFF; border-radius: 24px; border: 1px solid #F6D3DE; overflow-x: auto">
+<table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 15px">
+<thead>
+<tr style="background: #FFF0F4; text-align: left; color: #5E2A43; font-size: 13px">
+<th style="padding: 16px 24px; font-weight: 700">#</th>
+<th style="padding: 16px 24px; font-weight: 700"><span class="zh">题目</span><span class="en">Problem</span></th>
+<th style="padding: 16px 24px; font-weight: 700"><span class="zh">难度</span><span class="en">Difficulty</span></th>
+<th style="padding: 16px 24px; font-weight: 700; text-align: right"><span class="zh">通过率</span><span class="en">Acceptance</span></th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">1</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Two Sum：怎么 AA 才不尴尬</span><span class="en">Two Sum: splitting the bill without it getting weird</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #E3F4EA; color: #1C6B3F; font-size: 13px; font-weight: 700"><span class="zh">简单</span><span class="en">Easy</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">61.2%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">56</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Merge Intervals：两个人的 Google Calendar 怎么合并</span><span class="en">Merge Intervals: merging two Google Calendars</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFF0D6; color: #8A5300; font-size: 13px; font-weight: 700"><span class="zh">中等</span><span class="en">Medium</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">38.4%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">1143</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Longest Common Subsequence：硬找共同爱好</span><span class="en">Longest Common Subsequence: forcing shared interests</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFF0D6; color: #8A5300; font-size: 13px; font-weight: 700"><span class="zh">中等</span><span class="en">Medium</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">22.7%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">141</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Detect Cycle：你是不是又在和同一种人约会</span><span class="en">Detect Cycle: are you dating the same person again?</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFE0E8; color: #A3124E; font-size: 13px; font-weight: 700"><span class="zh">困难</span><span class="en">Hard</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">9.1%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">429</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Rate Limiting：第一次见面就想 merge？先 throttle 一下</span><span class="en">Rate Limiting: want to merge on the first date? Throttle it</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFF0D6; color: #8A5300; font-size: 13px; font-weight: 700"><span class="zh">中等</span><span class="en">Medium</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">17.5%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">H-07</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Graceful Shutdown：如何在两分钟后体面地结束</span><span class="en">Graceful Shutdown: wrapping up with dignity after two minutes</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFE0E8; color: #A3124E; font-size: 13px; font-weight: 700"><span class="zh">困难</span><span class="en">Hard</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">3.1%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">H-01</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">Meeting the Parents（follow-up：对方是湾区华人家长）</span><span class="en">Meeting the Parents (follow-up: they're Bay Area tiger parents)</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFE0E8; color: #A3124E; font-size: 13px; font-weight: 700"><span class="zh">困难</span><span class="en">Hard</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">4.0%</td>
+</tr>
+<tr style="border-top: 1px solid #F6D3DE">
+<td style="padding: 18px 24px; color: #7A4A60; font-weight: 600">H-02</td>
+<td style="padding: 18px 24px; font-weight: 600"><span class="zh">“So what do you do?”：怎么回答才不会聊到股票</span><span class="en">“So what do you do?” without bringing up your RSUs</span></td>
+<td style="padding: 18px 24px"><span style="padding: 4px 12px; border-radius: 999px; background: #FFE0E8; color: #A3124E; font-size: 13px; font-weight: 700"><span class="zh">困难</span><span class="en">Hard</span></span></td>
+<td style="padding: 18px 24px; text-align: right; color: #5E2A43">2.3%</td>
+</tr>
+</tbody>
+</table>
+<div style="padding: 16px 24px; border-top: 1px solid #F6D3DE; background: #FFF9FA; font-size: 14px; color: #7A4A60; display: flex; align-items: center; gap: 8px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D61F69" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+<span class="zh">剩余 192 道题需 Pro 会员解锁</span><span class="en">192 more problems unlock with Pro</span>
+</div>
+</div>
+</section>
+
+<!-- FEEDBACK REPORT -->
+<section style="background: #FFE3EA">
+<div style="max-width: 1200px; margin: 0 auto; padding: 104px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="flex: 1 1 380px; min-width: 0">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #A3124E">FEEDBACK</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">每次约会后，你都会收到一份面评</span><span class="en">After every date, you get an interview scorecard</span></h2>
+<p style="margin: 20px 0 0; font-size: 18px; color: #5E2A43"><span class="zh">我们的 rubric 由一位离过两次婚的组织心理学家设计。</span><span class="en">Our rubric was designed by an organizational psychologist with two divorces.</span></p>
+</div>
+<div style="flex: 999 1 520px; min-width: 0">
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; box-shadow: 0 20px 50px rgba(163,18,78,0.12)">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px">
+<div>
+<div style="font-size: 20px; font-weight: 800"><span class="zh">候选人：Kevin，L5</span><span class="en">Candidate: Kevin, L5</span></div>
+<div style="font-size: 13px; color: #7A4A60; margin-top: 2px"><span class="zh">Mock Date #7 · 咖啡轮</span><span class="en">Mock Date #7 · Coffee chat round</span></div>
+</div>
+<span style="padding: 6px 14px; border-radius: 999px; background: #3B0A24; color: #FFFFFF; font-size: 13px; font-weight: 700"><span class="zh">倾向：不约第二次</span><span class="en">Lean No Second Date</span></span>
+</div>
+<div style="margin-top: 24px; display: flex; flex-direction: column; gap: 18px">
+<div>
+<div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 700"><span><span class="zh">眼神交流</span><span class="en">Eye contact</span></span><span>3 / 5</span></div>
+<div style="margin-top: 6px; height: 8px; border-radius: 999px; background: #FFE3EA"><div style="width: 60%; height: 8px; border-radius: 999px; background: #D61F69"></div></div>
+<div style="margin-top: 6px; font-size: 13px; color: #7A4A60"><span class="zh">62% 的时间在和手机保持眼神接触</span><span class="en">Maintained eye contact with his phone 62% of the session</span></div>
+<div style="margin-top: 4px; font-size: 13px; color: #7A4A60"><span class="zh">首次 commit：未达成（甜点上桌时 session 已结束）</span><span class="en">Time to first commit: N/A (session ended at dessert)</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="background: #FFF5F7; border-radius: 16px; padding: 14px">
+<div style="font-size: 12px; color: #7A4A60; font-weight: 600"><span class="zh">对话延迟 p95</span><span class="en">Reply latency p95</span></div>
+<div style="font-size: 24px; font-weight: 800; margin-top: 4px">4.2s</div>
+</div>
+<div style="background: #FFF5F7; border-radius: 16px; padding: 14px">
+<div style="font-size: 12px; color: #7A4A60; font-weight: 600"><span class="zh">提到自己 startup</span><span class="en">Startup mentions</span></div>
+<div style="font-size: 24px; font-weight: 800; margin-top: 4px; color: #A3124E">11 <span style="font-size: 12px; color: #7A4A60; font-weight: 600">/ ≤2</span></div>
+</div>
+<div style="background: #FFF5F7; border-radius: 16px; padding: 14px">
+<div style="font-size: 12px; color: #7A4A60; font-weight: 600"><span class="zh">追问次数</span><span class="en">Follow-ups asked</span></div>
+<div style="font-size: 24px; font-weight: 800; margin-top: 4px">0</div>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="border: 1px solid #CDEBD8; background: #F2FAF5; border-radius: 16px; padding: 14px">
+<div style="font-size: 12px; font-weight: 800; color: #1C6B3F"><span class="zh">亮点</span><span class="en">STRENGTHS</span></div>
+<div style="font-size: 14px; margin-top: 4px"><span class="zh">点单果断，Venmo 秒付。</span><span class="en">Decisive ordering. Instant Venmo.</span></div>
+</div>
+<div style="border: 1px solid #F6C9D7; background: #FFF5F7; border-radius: 16px; padding: 14px">
+<div style="font-size: 12px; font-weight: 800; color: #A3124E"><span class="zh">待提升</span><span class="en">GROWTH AREA</span></div>
+<div style="font-size: 14px; margin-top: 4px"><span class="zh">对方说喜欢徒步时，不需要推荐 Strava 的竞品。</span><span class="en">When she says she likes hiking, don't pitch a Strava competitor.</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="max-width: 1200px; margin: 0 auto; padding: 104px 24px 72px">
+<div style="text-align: center">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">PRICING</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">爱情无价。套餐有价。</span><span class="en">Love is priceless. Our plans are not.</span></h2>
+</div>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; align-items: stretch">
+
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 15px; font-weight: 800">Free</div>
+<div style="font-size: 40px; font-weight: 800; letter-spacing: -0.03em">$0</div>
+<div style="font-size: 14px; color: #7A4A60; font-weight: 600">Behavioral Only</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #5E2A43; flex: 1">
+<div><span class="zh">· 异步文字 mock</span><span class="en">· Async text-only mocks</span></div>
+<div><span class="zh">· AI 给你的 Hinge 开场白打分</span><span class="en">· AI scores your Hinge openers</span></div>
+</div>
+<a href="#quiz" data-open-quiz style="min-height: 48px; border-radius: 999px; border: 1.5px solid #E7A9BE; color: #3B0A24; text-decoration: none; font-weight: 700; display: flex; align-items: center; justify-content: center"><span class="zh">免费开始</span><span class="en">Start free</span></a>
+</div>
+
+<div style="background: #D61F69; color: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 50px rgba(214,31,105,0.28)">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<div style="font-size: 15px; font-weight: 800">Pro</div>
+<span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: #A3124E; font-size: 12px; font-weight: 800"><span class="zh">最受欢迎</span><span class="en">Most popular</span></span>
+</div>
+<div style="font-size: 40px; font-weight: 800; letter-spacing: -0.03em">$299<span style="font-size: 16px; font-weight: 600">/mo</span></div>
+<div style="font-size: 14px; font-weight: 600; color: #FFE3EA"><span class="zh">适合认真上岸的人</span><span class="en">For the serious grinder</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; flex: 1">
+<div><span class="zh">· 每月 4 次 mock date</span><span class="en">· 4 mock dates per month</span></div>
+<div><span class="zh">· 完整 rubric 反馈</span><span class="en">· Full rubric feedback</span></div>
+<div><span class="zh">· 录像回放，支持 0.5 倍速（别急）</span><span class="en">· Session replays at 0.5x speed (no rush)</span></div>
+</div>
+<a href="#top" style="min-height: 48px; border-radius: 999px; background: #FFFFFF; color: #A3124E; text-decoration: none; font-weight: 800; display: flex; align-items: center; justify-content: center"><span class="zh">开始订阅</span><span class="en">Subscribe</span></a>
+</div>
+
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 15px; font-weight: 800">Full Loop</div>
+<div style="font-size: 40px; font-weight: 800; letter-spacing: -0.03em">$1,499</div>
+<div style="font-size: 14px; color: #7A4A60; font-weight: 600"><span class="zh">完全模拟真实 onsite</span><span class="en">A complete onsite-style loop</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #5E2A43; flex: 1">
+<div>· Coffee chat → Dinner → The Walk Back → Debrief</div>
+<div><span class="zh">· 含 hiring committee 复盘</span><span class="en">· Includes a hiring committee review</span></div>
+</div>
+<a href="#top" style="min-height: 48px; border-radius: 999px; border: 1.5px solid #E7A9BE; color: #3B0A24; text-decoration: none; font-weight: 700; display: flex; align-items: center; justify-content: center"><span class="zh">预约 Loop</span><span class="en">Book the loop</span></a>
+</div>
+
+<div style="background: #3B0A24; color: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div style="font-size: 15px; font-weight: 800">Enterprise</div>
+<div style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2">Production Readiness Program</div>
+<div style="font-size: 14px; color: #FFB8CF; font-style: italic"><span class="zh">上 prod 之前，每个人都值得拥有一个 staging 环境。</span><span class="en">Everyone deserves a staging environment before pushing to prod.</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #F6D3DE; flex: 1">
+<div><span class="zh">· 全程 consented，签 NDA</span><span class="en">· Fully consented, fully NDA'd</span></div>
+<div><span class="zh">· SOC 2 Type II 认证</span><span class="en">· SOC 2 Type II certified</span></div>
+<div><span class="zh">· 支持 pair programming 与本地部署</span><span class="en">· Pair programming and on-prem deployment</span></div>
+<div><span class="zh">· 99.9% uptime SLA*</span><span class="en">· 99.9% uptime SLA*</span></div>
+<div><span class="zh">· 细节签约后开放</span><span class="en">· Details disclosed post-signature</span></div>
+<div style="font-size: 12px; color: #D9A3B8; margin-top: 2px"><span class="zh">* 不承诺持续时长</span><span class="en">* Duration not guaranteed</span></div>
+</div>
+<a href="#faq" style="min-height: 48px; border-radius: 999px; background: #FF9EC0; color: #3B0A24; text-decoration: none; font-weight: 800; display: flex; align-items: center; justify-content: center"><span class="zh">联系销售</span><span class="en">Talk to sales</span></a>
+</div>
+
+</div>
+</section>
+
+<!-- COACHES -->
+<section id="coaches" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 104px">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">COACHES</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">认识你的 Mock Dater</span><span class="en">Meet your Mock Daters</span></h2>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 56px; height: 56px; border-radius: 50%; background: #FFD1DE; color: #A3124E; font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center">J</span>
+<div><div style="font-size: 18px; font-weight: 800">Jason</div><div style="font-size: 13px; color: #7A4A60; font-weight: 600">ex-Meta · L6</div></div>
+</div>
+<p style="margin: 0; font-size: 15px; color: #5E2A43"><span class="zh">有过 47 次 first date、3 次 second date。“我知道所有可能出错的地方，因为我都犯过。”</span><span class="en">47 first dates, 3 second dates. “I know everything that can go wrong, because I've done all of it.”</span></p>
+<div style="font-size: 13px; color: #1C6B3F; font-weight: 700"><span class="zh">可约 · 周二、周四晚</span><span class="en">Available · Tue &amp; Thu evenings</span></div>
+</div>
+
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 56px; height: 56px; border-radius: 50%; background: #FFE9C7; color: #8A5300; font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center">P</span>
+<div><div style="font-size: 18px; font-weight: 800">Priya</div><div style="font-size: 13px; color: #7A4A60; font-weight: 600">Stanford GSB</div></div>
+</div>
+<p style="margin: 0; font-size: 15px; color: #5E2A43"><span class="zh">在 6 个国家被 founder ghost 过。专门辅导 founder 类候选人。</span><span class="en">Ghosted by founders in 6 countries. Specializes in founder candidates.</span></p>
+<div style="font-size: 13px; color: #1C6B3F; font-weight: 700"><span class="zh">可约 · 周末 brunch 轮</span><span class="en">Available · Weekend brunch rounds</span></div>
+</div>
+
+<div style="background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="width: 56px; height: 56px; border-radius: 50%; background: #E3E6FF; color: #3A3F9E; font-weight: 800; font-size: 22px; display: flex; align-items: center; justify-content: center">L</span>
+<div><div style="font-size: 18px; font-weight: 800">Dr. Lin</div><div style="font-size: 13px; color: #7A4A60; font-weight: 600"><span class="zh">前补习班金牌讲师</span><span class="en">Former star cram-school teacher</span></div></div>
+</div>
+<p style="margin: 0; font-size: 15px; color: #5E2A43"><span class="zh">“带过的学生都上了藤校，现在负责他们的下一步。”</span><span class="en">“All my students got into the Ivies. Now I handle what comes next.”</span></p>
+<div style="font-size: 13px; color: #A3124E; font-weight: 700"><span class="zh">已约满 · 候补名单 14 人</span><span class="en">Fully booked · 14 on the waitlist</span></div>
+</div>
+
+</div>
+</section>
+
+<!-- PARENT PORTAL -->
+<section id="parents" style="background: #3B0A24; color: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 104px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="flex: 999 1 460px; min-width: 0">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #FF9EC0">PARENT PORTAL</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">实时追踪你成年孩子的恋爱进度</span><span class="en">Track your adult child's progress in real time</span></h2>
+<p style="margin: 20px 0 0; font-size: 18px; color: #F6D3DE"><span class="zh">每周推送报告、同龄人百分位排名，还有“对方家庭背景”增值包。</span><span class="en">Weekly reports, peer percentile rankings, and a Partner Family Background add-on.</span></p>
+<blockquote style="margin: 32px 0 0; padding: 0 0 0 0; font-family: 'Instrument Serif', 'Noto Sans SC', serif; font-style: italic; font-size: 26px; line-height: 1.35; color: #FFFFFF">
+<span class="zh">“他从小上 Kumon 到现在，我们一直陪着他。”</span><span class="en">“We've been with him since Kumon. We're not stopping now.”</span>
+</blockquote>
+<div style="margin-top: 10px; font-size: 14px; color: #FFB8CF; font-weight: 600"><span class="zh">—— 一位来自 Cupertino 的妈妈</span><span class="en">— A mom in Cupertino</span></div>
+</div>
+<div style="flex: 1 1 340px; min-width: 0">
+<div style="background: #FFFFFF; color: #3B0A24; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<div style="font-weight: 800"><span class="zh">Kevin 的本周报告</span><span class="en">Kevin's weekly report</span></div>
+<span style="font-size: 12px; color: #7A4A60; font-weight: 600">Week 46</span>
+</div>
+<div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600"><span><span class="zh">同龄人百分位</span><span class="en">Peer percentile</span></span><span style="color: #A3124E">34th</span></div>
+<div style="margin-top: 6px; height: 8px; border-radius: 999px; background: #FFE3EA"><div style="width: 34%; height: 8px; border-radius: 999px; background: #D61F69"></div></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="background: #FFF5F7; border-radius: 14px; padding: 12px"><div style="font-size: 12px; color: #7A4A60; font-weight: 600"><span class="zh">本周 mock</span><span class="en">Mocks this week</span></div><div style="font-size: 22px; font-weight: 800">2</div></div>
+<div style="background: #FFF5F7; border-radius: 14px; padding: 12px"><div style="font-size: 12px; color: #7A4A60; font-weight: 600"><span class="zh">预计上岸</span><span class="en">ETA to offer</span></div><div style="font-size: 22px; font-weight: 800">Q3 '27</div></div>
+</div>
+<div style="background: #FFF0D6; border-radius: 14px; padding: 12px 14px; font-size: 14px"><span style="font-weight: 800; color: #8A5300"><span class="zh">妈妈的留言：</span><span class="en">Mom's note: </span></span><span class="zh">下次穿那件蓝衬衫。</span><span class="en">Wear the blue shirt next time.</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 104px 24px 72px">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">TESTIMONIALS</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">学员怎么说</span><span class="en">From our alumni</span></h2>
+<div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px">
+<figure style="margin: 0; background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; justify-content: space-between; gap: 20px">
+<blockquote style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45"><span class="zh">“一个季度从 0 到 3 个 second date，这是我 OKR 完成得最好的一次。”</span><span class="en">“0 to 3 second dates in one quarter. Best OKR attainment of my career.”</span></blockquote>
+<figcaption style="font-size: 14px; color: #7A4A60; font-weight: 600">Software Engineer, Mountain View</figcaption>
+</figure>
+<figure style="margin: 0; background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; justify-content: space-between; gap: 20px">
+<blockquote style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45"><span class="zh">“我妈付的钱。她之前也给我报了奥数。”</span><span class="en">“My mom paid for it. She also paid for my Math Olympiad classes.”</span></blockquote>
+<figcaption style="font-size: 14px; color: #7A4A60; font-weight: 600">PM, Sunnyvale</figcaption>
+</figure>
+<figure style="margin: 0; background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; justify-content: space-between; gap: 20px">
+<blockquote style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45"><span class="zh">“刷了 12 次 mock，终于过了真的那场。六周后分了，但那场的 feedback 是 4.8。”</span><span class="en">“After 12 mocks I finally passed the real one. We broke up six weeks later, but my feedback score was 4.8.”</span></blockquote>
+<figcaption style="font-size: 14px; color: #7A4A60; font-weight: 600">Founder, SoMa</figcaption>
+</figure>
+<figure style="margin: 0; background: #FFFFFF; border-radius: 24px; padding: 28px; border: 1px solid #F6D3DE; display: flex; flex-direction: column; justify-content: space-between; gap: 20px">
+<blockquote style="margin: 0; font-size: 18px; font-weight: 600; line-height: 1.45"><span class="zh">“上了 Enterprise 之后，我第一次 push 到 prod 没有 rollback。”</span><span class="en">“After Enterprise, I pushed to prod without a rollback for the first time.”</span></blockquote>
+<figcaption style="font-size: 14px; color: #7A4A60; font-weight: 600">Staff Engineer, Palo Alto</figcaption>
+</figure>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="max-width: 860px; margin: 0 auto; padding: 72px 24px 104px">
+<div style="text-align: center">
+<div style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">FAQ</div>
+<h2 style="margin: 12px 0 0; font-size: clamp(32px, 4.6vw, 44px); line-height: 1.12; letter-spacing: -0.03em; font-weight: 800"><span class="zh">常见问题</span><span class="en">Frequently asked questions</span></h2>
+</div>
+<div style="margin-top: 40px; display: flex; flex-direction: column; gap: 12px">
+<details style="background: #FFFFFF; border-radius: 20px; border: 1px solid #F6D3DE; padding: 0 24px">
+<summary style="min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 17px; font-weight: 700"><span><span class="zh">这是不是有点奇怪？</span><span class="en">Isn't this a little weird?</span></span><span class="faq-plus" style="font-size: 24px; color: #D61F69; transition: transform 0.2s" aria-hidden="true">+</span></summary>
+<p style="margin: 0 0 20px; color: #5E2A43"><span class="zh">2012 年的 LeetCode 也挺奇怪的。</span><span class="en">So was LeetCode in 2012.</span></p>
+</details>
+<details style="background: #FFFFFF; border-radius: 20px; border: 1px solid #F6D3DE; padding: 0 24px">
+<summary style="min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 17px; font-weight: 700"><span><span class="zh">我会爱上我的 mock dater 吗？</span><span class="en">Will I fall for my mock dater?</span></span><span class="faq-plus" style="font-size: 24px; color: #D61F69; transition: transform 0.2s" aria-hidden="true">+</span></summary>
+<p style="margin: 0 0 20px; color: #5E2A43"><span class="zh">所有教练都签了 non-compete 和 non-fall-in-love agreement，违约直接移交 HR。</span><span class="en">Every coach signs a non-compete and a non-fall-in-love agreement. Violations are referred to HR.</span></p>
+</details>
+<details style="background: #FFFFFF; border-radius: 20px; border: 1px solid #F6D3DE; padding: 0 24px">
+<summary style="min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 17px; font-weight: 700"><span><span class="zh">公司能报销吗？</span><span class="en">Can my company expense this?</span></span><span class="faq-plus" style="font-size: 24px; color: #D61F69; transition: transform 0.2s" aria-hidden="true">+</span></summary>
+<p style="margin: 0 0 20px; color: #5E2A43"><span class="zh">可以，走 L&amp;D 预算。发票抬头写 “Interpersonal Skills Workshop”。</span><span class="en">Yes, under your L&amp;D budget. We invoice it as an “Interpersonal Skills Workshop.”</span></p>
+</details>
+<details style="background: #FFFFFF; border-radius: 20px; border: 1px solid #F6D3DE; padding: 0 24px">
+<summary style="min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 17px; font-weight: 700"><span><span class="zh">有内推吗？</span><span class="en">Do you offer referrals?</span></span><span class="faq-plus" style="font-size: 24px; color: #D61F69; transition: transform 0.2s" aria-hidden="true">+</span></summary>
+<p style="margin: 0 0 20px; color: #5E2A43"><span class="zh">Top 10% 的学员会被内推给合作红娘，内推成功双方都有 bonus。</span><span class="en">Top 10% performers get referred to our partner matchmakers. Referral bonus applies on both sides.</span></p>
+</details>
+</div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="max-width: 1200px; margin: 0 auto; padding: 0 24px 96px">
+<div style="background: #D61F69; color: #FFFFFF; border-radius: 32px; padding: 64px 40px; text-align: center">
+<h2 style="margin: 0; font-size: clamp(34px, 5vw, 48px); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800"><span class="zh">爱情没有捷径。</span><span class="en">There's no shortcut to love.</span><br><span style="font-family: 'Instrument Serif', 'Noto Sans SC', serif; font-style: italic; font-weight: 400"><span class="zh">但有题库。</span><span class="en">There is a problem set.</span></span></h2>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<a href="#quiz" data-open-quiz style="min-height: 52px; padding: 0 28px; border-radius: 999px; background: #FFFFFF; color: #A3124E; text-decoration: none; font-weight: 800; display: flex; align-items: center"><span class="zh">免费测评</span><span class="en">Start Free Diagnostic</span></a>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid #F6D3DE; background: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; font-size: 14px; color: #7A4A60">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 420px">
+<div style="font-weight: 800; color: #3B0A24; font-size: 16px">LeetDate, Inc.</div>
+<div>Backed by Y Combinator W27 · © 2026</div>
+<div><span class="zh">本网站为讽刺作品，公司纯属虚构。</span><span class="en">This site is satire. LeetDate is not a real company.</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 420px">
+<div style="font-weight: 800; color: #3B0A24"><span class="zh">招聘中</span><span class="en">We're hiring</span></div>
+<div><span class="zh">Senior Mock Dater (L5)：要求 5 年以上以专业身份提供情绪价值的经验。</span><span class="en">Senior Mock Dater (L5): 5+ years of being emotionally available in a professional capacity.</span></div>
+<div><span class="zh">福利：无限 PTO。但 performance review 非常严格。</span><span class="en">Perks: unlimited PTO. Performance reviews are rigorous.</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 300px">
+<div style="font-weight: 800; color: #3B0A24">Blog</div>
+<div><span class="zh">为什么你的第一次约会应该做 A/B 测试</span><span class="en">Why Your First Date Should Be A/B Tested</span></div>
+</div>
+</div>
+</footer>
+
+
+<dialog id="quiz" aria-labelledby="quizTitle" style="border: none; border-radius: 28px; padding: 0; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); color: #3B0A24; background: #FFFFFF; box-shadow: 0 30px 80px rgba(59,10,36,0.3)">
+<form id="quizForm" method="dialog" style="padding: 32px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px">
+<div>
+<div style="font-size: 12px; font-weight: 800; letter-spacing: 0.12em; color: #D61F69">FREE DIAGNOSTIC</div>
+<h2 id="quizTitle" style="margin: 6px 0 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em"><span class="zh">恋爱准备度测评</span><span class="en">Romantic Readiness Assessment</span></h2>
+<div style="font-size: 13px; color: #7A4A60; margin-top: 4px"><span class="zh">完整版 45 分钟，这是 30 秒试用版</span><span class="en">The full test takes 45 minutes. This is the 30-second trial.</span></div>
+</div>
+<button type="button" data-close-quiz aria-label="Close" style="flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid #F6D3DE; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A4A60" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div id="quizQuestions" style="display: flex; flex-direction: column; gap: 22px">
+<fieldset style="border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="font-weight: 800; font-size: 16px; margin-bottom: 10px; padding: 0"><span style="color: #D61F69">Q1.</span> <span class="zh">约会时你最常看的是？</span><span class="en">On a date, you mostly look at:</span></legend>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q1" value="200" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">对方</span><span class="en">Your date</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q1" value="40" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">手机</span><span class="en">Your phone</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q1" value="90" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">菜单右边的价格</span><span class="en">The prices on the menu</span></span></label>
+</fieldset>
+<fieldset style="border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="font-weight: 800; font-size: 16px; margin-bottom: 10px; padding: 0"><span style="color: #D61F69">Q2.</span> <span class="zh">对方说“我最近在学陶艺”，你会：</span><span class="en">They say “I've been getting into pottery.” You:</span></legend>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q2" value="260" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">追问 TA 喜欢陶艺的原因</span><span class="en">Ask what they love about it</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q2" value="20" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">讲你的 startup 怎么 disrupt 陶艺</span><span class="en">Explain how your startup could disrupt pottery</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q2" value="60" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">发一个 Notion 链接</span><span class="en">Send a Notion link</span></span></label>
+</fieldset>
+<fieldset style="border: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="font-weight: 800; font-size: 16px; margin-bottom: 10px; padding: 0"><span style="color: #D61F69">Q3.</span> <span class="zh">第一次约会结束后，你会：</span><span class="en">After the first date, you:</span></legend>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q3" value="250" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">发消息说今晚很开心</span><span class="en">Text that you had a great time</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q3" value="80" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">发一份 retro 文档</span><span class="en">Send a retro doc</span></span></label>
+<label style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 16px; border-radius: 14px; border: 1.5px solid #F6D3DE; cursor: pointer; font-size: 15px">
+<input type="radio" name="q3" value="30" required style="accent-color: #D61F69; width: 18px; height: 18px; margin: 0">
+<span><span class="zh">等 24 小时，看对方的 feedback</span><span class="en">Wait 24 hours for their feedback</span></span></label>
+</fieldset>
+</div>
+<div id="quizResult" hidden style="background: #FFF5F7; border-radius: 20px; padding: 24px; text-align: center">
+<div style="font-size: 13px; font-weight: 700; color: #7A4A60"><span class="zh">你的 RRS 分数</span><span class="en">Your RRS score</span></div>
+<div style="font-size: 56px; font-weight: 800; letter-spacing: -0.03em; color: #D61F69; line-height: 1.1"><span id="quizScore">0</span><span style="font-size: 20px; color: #9A6A80">/800</span></div>
+<div id="quizVerdict" style="margin-top: 8px; font-weight: 800; font-size: 17px"></div>
+<div id="quizAdvice" style="margin-top: 6px; font-size: 14px; color: #5E2A43"></div>
+</div>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<button type="submit" id="quizSubmit" style="flex: 1; min-height: 52px; border-radius: 999px; border: none; background: #D61F69; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 16px; cursor: pointer"><span class="zh">查看结果</span><span class="en">See my score</span></button>
+<a href="#pricing" id="quizCta" hidden data-close-quiz style="flex: 1; min-height: 52px; border-radius: 999px; background: #3B0A24; color: #FFFFFF; text-decoration: none; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center"><span class="zh">查看套餐</span><span class="en">See plans</span></a>
+</div>
+</form>
+</dialog>
+</div>
+
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+  var lang = 'zh';
+  try { var s = localStorage.getItem('leetdate-lang'); if (s === 'en' || s === 'zh') lang = s; } catch(e) {}
+  function setLang(l){
+    lang = l;
+    app.className = 'lang-' + l;
+    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+    document.title = l === 'zh' ? 'LeetDate · 约会刷题平台' : 'LeetDate · Grind your first date';
+    try { localStorage.setItem('leetdate-lang', l); } catch(e) {}
+  }
+  setLang(lang);
+  document.getElementById('langToggle').addEventListener('click', function(){ setLang(lang === 'zh' ? 'en' : 'zh'); });
+
+  // hero profile card
+  var profiles = [
+    {i:'J', n:'Jason, 31', t:'ex-Meta · L6', bg:'#D61F69', tags:[['徒步','Hiking'],['System design','System design'],['珍珠奶茶','Boba']]},
+    {i:'P', n:'Priya, 29', t:'Stanford GSB', bg:'#B8620A', tags:[['创业','Startups'],['普拉提','Pilates'],['被 ghost','Getting ghosted']]},
+    {i:'L', n:'Dr. Lin, 54', t:'前补习班金牌讲师', tEn:'Former cram-school star', bg:'#3A3F9E', tags:[['奥数','Math Olympiad'],['藤校','The Ivies'],['家长会','PTA meetings']]},
+    {i:'K', n:'Kevin, 28', t:'Google · L5', bg:'#1C6B3F', tags:[['Kubernetes','Kubernetes'],['半马','Half marathons'],['Strava','Strava']]}
+  ];
+  var pi = 0, toastTimer;
+  var el = function(id){ return document.getElementById(id); };
+  function esc(s){ return s.replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function renderProfile(){
+    var p = profiles[pi];
+    el('pInitial').textContent = p.i;
+    el('pInitial').style.background = p.bg;
+    el('pName').textContent = p.n;
+    el('pTitle').innerHTML = p.tEn ? '<span class="zh">'+esc(p.t)+'</span><span class="en">'+esc(p.tEn)+'</span>' : esc(p.t);
+    el('pTags').innerHTML = p.tags.map(function(t){
+      return '<span style="padding: 6px 12px; border-radius: 999px; background: #FFF0F4; color: #5E2A43; font-size: 13px; font-weight: 600"><span class="zh">'+esc(t[0])+'</span><span class="en">'+esc(t[1])+'</span></span>';
+    }).join('');
+  }
+  function toast(zhT, enT, zhB, enB){
+    el('pToastTitle').innerHTML = '<span class="zh">'+zhT+'</span><span class="en">'+enT+'</span>';
+    el('pToastBody').innerHTML = '<span class="zh">'+zhB+'</span><span class="en">'+enB+'</span>';
+    var t = el('pToast');
+    t.style.opacity = '0'; t.style.transform = 'translateY(6px)';
+    requestAnimationFrame(function(){ t.style.opacity = '1'; t.style.transform = 'none'; });
+  }
+  var passLines = [
+    ['已跳过','Skipped','跳过记录已同步至家长端','Synced to your Parent Portal'],
+    ['已跳过','Skipped','你的挑剔程度：Top 8%','Pickiness: top 8%'],
+    ['已跳过','Skipped','建议降低 bar 或升级 Pro','Lower your bar or upgrade to Pro'],
+    ['已跳过','Skipped','提示：handshake 之后别急着升级协议','Tip: don\'t rush the protocol upgrade after the handshake']
+  ];
+  var pc = 0;
+  el('pPass').addEventListener('click', function(){
+    pi = (pi + 1) % profiles.length; renderProfile();
+    var l = passLines[pc++ % passLines.length]; toast(l[0], l[1], l[2], l[3]);
+  });
+  el('pLike').addEventListener('click', function(){
+    var p = profiles[pi].n.split(',')[0];
+    toast('配对成功！','It\'s a match!','已为你预约 '+esc(p)+'，面评 24 小时内送达','Booked with '+esc(p)+'. Feedback within 24h');
+  });
+
+  // quiz
+  var dlg = el('quiz'), form = el('quizForm');
+  function resetQuiz(){
+    form.reset();
+    el('quizQuestions').hidden = false; el('quizResult').hidden = true;
+    el('quizSubmit').hidden = false; el('quizCta').hidden = true;
+  }
+  function openQuiz(e){
+    if (e) e.preventDefault();
+    resetQuiz();
+    if (dlg.showModal) { try { dlg.showModal(); } catch(_) { dlg.setAttribute('open',''); } } else { dlg.setAttribute('open',''); }
+  }
+  function closeQuiz(){ if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open-quiz]'), function(a){ a.addEventListener('click', openQuiz); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-close-quiz]'), function(b){ b.addEventListener('click', closeQuiz); });
+  dlg.addEventListener('click', function(e){ if (e.target === dlg) closeQuiz(); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var score = 90;
+    ['q1','q2','q3'].forEach(function(q){ var c = form.querySelector('input[name="'+q+'"]:checked'); if (c) score += +c.value; });
+    var v, a;
+    if (score >= 650) { v = ['Strong Hire','Strong Hire']; a = ['你其实不需要我们。但还是买个 Pro 吧，以防万一。','You don’t actually need us. Buy Pro anyway, just in case.']; }
+    else if (score >= 400) { v = ['Lean Hire','Lean Hire']; a = ['底子还行，建议 Pro 套餐稳定发挥。','Solid fundamentals. Pro will make it consistent.']; }
+    else { v = ['No Hire','No Hire']; a = ['建议直接上 Full Loop，并开通家长端。','We recommend the Full Loop, plus the Parent Portal.']; }
+    el('quizScore').textContent = score;
+    el('quizVerdict').textContent = v[0];
+    el('quizAdvice').innerHTML = '<span class="zh">'+a[0]+'</span><span class="en">'+a[1]+'</span>';
+    el('quizQuestions').hidden = true; el('quizResult').hidden = false;
+    el('quizSubmit').hidden = true; el('quizCta').hidden = false;
+  });
+})();
+</script>
+
+</body>
+</html>
